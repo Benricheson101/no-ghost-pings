@@ -3,6 +3,7 @@ import Client from "../util/Client";
 import { post } from "../util/Request";
 
 export = async (client: Client, message: Message) => {
+  if (!message.guild.me.permissions.has("SEND_MESSAGES")) return;
   if (message.channel.type !== "text") return;
   if (Date.now() - message.createdTimestamp >= 300000) return; // 5 minutes
   const noMentions: boolean =
@@ -13,7 +14,7 @@ export = async (client: Client, message: Message) => {
 
   if (noMentions) return;
 
-  let webhook = (await message.channel.fetchWebhooks()).first()?.url
+  let webhook = (await message.channel.fetchWebhooks()).find((w) => w.type === "Incoming")?.url
     || (await message.channel.createWebhook("No-Ghost-Pings Webhook", { reason: 'Send a message "as" the user who sent a ghost ping' })).url;
 
 
@@ -35,5 +36,6 @@ export = async (client: Client, message: Message) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body)
   })
+    .then(console.log)
     .catch(console.error);
-}
+  }
