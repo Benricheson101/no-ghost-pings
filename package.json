@@ -1,0 +1,16 @@
+{
+  "name": "no-ghost-pings",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^13.11.1",
+    "@types/node-fetch": "^2.5.5",
+    "eslint": "^6.8.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "discord.js": "discordjs/discord.js",
+    "node-fetch": "^2.6.0"
+  }
+}
