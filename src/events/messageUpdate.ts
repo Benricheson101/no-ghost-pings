@@ -8,13 +8,11 @@ export = async (client, oldMsg, newMsg) => {
   let webhook = (await oldMsg.channel.fetchWebhooks()).find((w) => w.type === "Incoming")?.url
     || (await oldMsg.channel.createWebhook("No-Ghost-Pings Webhook", { reason: 'Send a message "as" the user who sent a ghost ping' })).url;
 
-
-
  const mentions: string[] = [];
 
-  oldMsg.mentions.users.array().filter((u: User) => !newMsg.mentions.users.array().includes(u)).forEach((u: User) => mentions.push(u.toString()));
+  oldMsg.mentions.users.array().filter((u: User) => !newMsg.mentions.users.array().includes(u) && !u.bot).forEach((u: User) => mentions.push(u.toString()));
 
-  oldMsg.mentions.roles.array().filter((m: Role) => !newMsg.mentions.roles.array().includes(m)).forEach((m: Role) => mentions.push(m.toString()));
+  oldMsg.mentions.roles.array().filter((m: Role) => !newMsg.mentions.roles.array().includes(m) && !m.managed).forEach((m: Role) => mentions.push(m.toString()));
 
   if (oldMsg.mentions.everyone && !newMsg.mentions.everyone) mentions.push("@everyone");
 

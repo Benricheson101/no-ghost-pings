@@ -20,8 +20,8 @@ export = async (client: Client, message: Message) => {
 
   let mentions = [];
 
-  message.mentions.members.forEach((mention) => mentions.push(mention.toString()));
-  message.mentions.roles.forEach((mention) => mentions.push(mention.toString()));
+  message.mentions.members.filter((mention) => !mention.user.bot && mention.user.id !== message.author.id).forEach((mention) => mentions.push(mention.toString()));
+  message.mentions.roles.filter((mention) => !mention.managed).forEach((mention) => mentions.push(mention.toString()));
   if (message.mentions.everyone) mentions.push("@everyone");
 
   const body = {
@@ -39,3 +39,4 @@ export = async (client: Client, message: Message) => {
     .then(console.log)
     .catch(console.error);
   }
+
