@@ -24,6 +24,8 @@ export = async (client: Client, message: Message) => {
   message.mentions.roles.filter((mention) => !mention.managed).forEach((mention) => mentions.push(mention.toString()));
   if (message.mentions.everyone) mentions.push("@everyone");
 
+  if (!mentions.length) return;
+
   const body = {
     content: `${mentions.join(" ")} \`[Ghost ${mentions.length > 1 ? "pings" : "ping"}]\``,
     avatar_url: message.author.displayAvatarURL({ format: "png", dynamic: true }),
