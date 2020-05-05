@@ -3,7 +3,8 @@ import { Collection, Snowflake, Role, GuildMember, User } from "discord.js";
 import { post } from "../util/Request";
 
 export = async (client, oldMsg, newMsg) => {
- //if (newMsg.mentions === oldMsg.mentions) return;
+ // ignore bots
+  if (oldMsg.author.bot) return
 
   let webhook = (await oldMsg.channel.fetchWebhooks()).find((w) => w.type === "Incoming")?.url
     || (await oldMsg.channel.createWebhook("No-Ghost-Pings Webhook", { reason: 'Send a message "as" the user who sent a ghost ping' })).url;
